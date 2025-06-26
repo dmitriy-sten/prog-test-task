@@ -1,35 +1,30 @@
 import { makeAutoObservable } from "mobx"
 import { EmotionCardDto } from "../types";
-import { emotionsMap } from "./constants";
-
+import { emotions } from "./constants";
 
 export class EmotionsStore {
 
-    emotionCards: Map<number, EmotionCardDto> = new Map(emotionsMap)
+  emotionCards: EmotionCardDto[] = emotions
 
-    constructor() {
-        makeAutoObservable(this)
-    }
+  constructor() {
+    makeAutoObservable(this)
+  }
 
-    addNewCard(item: EmotionCardDto) {
-        const newId = this.emotionCards.size+1
+  serArray(arr:EmotionCardDto[]){
+    this.emotionCards = arr
+  }
 
+  addNewCard(item: EmotionCardDto) {
+    const newId = this.emotionCards.length + 1
+    return this.emotionCards.push({ ...item, id: newId})
+  }
 
-        return this.emotionCards.set(newId, item)
-    }
+  deleteCard(id: number) {
+    this.emotionCards = this.emotionCards.filter(item => item.id !== id)
+  }
 
-
-    deleteCard(id: number) {
-        if (this.emotionCards.has(id)) {
-            return this.emotionCards.delete(id)
-        }
-    }
-
-    clearCards() {
-        return this.emotionCards.clear()
-    }
-
-
-
+  clearCards() {
+    return this.emotionCards = []
+  }
 }
 

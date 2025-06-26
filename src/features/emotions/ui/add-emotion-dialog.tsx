@@ -1,5 +1,6 @@
 "use client";
 import { useEmotionsStore } from "@/app/providers/store-provider";
+import { SearchSelect } from "@/shared/components/search-select";
 import { Button } from "@/shared/components/ui/button";
 import {
   Dialog,
@@ -10,9 +11,9 @@ import {
   DialogTrigger,
 } from "@/shared/components/ui/dialog";
 import { Input } from "@/shared/components/ui/input";
-import { randomUUID } from "crypto";
 import { Plus } from "lucide-react";
 import React from "react";
+import { EmotionCardDto } from "../types";
 
 interface Props {
   className?: string;
@@ -20,16 +21,22 @@ interface Props {
 
 export const AddEmotionDialog: React.FC<Props> = ({ className }) => {
   const [desc, setDesc] = React.useState("");
-  const [name, setName] = React.useState("");
+  const [emoVarinat, setEmoVarinat] = React.useState<EmotionCardDto>();
 
   const { emotionsStore } = useEmotionsStore();
 
   const handleCreateCard = () => {
-    emotionsStore.addNewCard({
-      description: desc,
-      name: name,
-      emoji: "emogii test",
-    });
+    if (emoVarinat?.name && emoVarinat.emoji) {
+      emotionsStore.addNewCard({
+        description: desc,
+        name: emoVarinat.name,
+        emoji: emoVarinat.emoji,
+      });
+    }
+
+    setDesc('')
+    setEmoVarinat(undefined)
+
   };
 
   return (
@@ -42,12 +49,9 @@ export const AddEmotionDialog: React.FC<Props> = ({ className }) => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="mb-2">Add new emotion</DialogTitle>
-          <Input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter name..."
-            className="mb-1"
-          />
+
+          <p className="text-8xl text-center whitespace-pre-line">{emoVarinat?.emoji}</p>
+          <SearchSelect setValue={setEmoVarinat} />
           <Input
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
@@ -57,7 +61,7 @@ export const AddEmotionDialog: React.FC<Props> = ({ className }) => {
 
           <Button
             className="ml-auto"
-            disabled={!desc || !name}
+            disabled={!desc || !emoVarinat?.name}
             onClick={handleCreateCard}
           >
             Create
