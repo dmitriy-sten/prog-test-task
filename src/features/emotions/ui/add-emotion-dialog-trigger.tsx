@@ -10,9 +10,19 @@ import {
 } from "@/shared/components/ui/dialog";
 import { Input } from "@/shared/components/ui/input";
 import React, { useState } from "react";
-import { EmotionVariant } from "../types";
+import { EmotionCardDto, EmotionVariant } from "../types";
 import { EmotionsSelect } from "./emotions-select";
 import { useIsMobile } from "@/shared/hooks/use-is-mobile";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/shared/components/ui/drawer";
 
 interface Props {
   className?: string;
@@ -43,34 +53,67 @@ export const AddEmotionDialogTrigger: React.FC<Props> = ({
     }
   };
 
-  return (
-    <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle className="mb-2">Створити нову картку</DialogTitle>
-        </DialogHeader>
+  if (isMobile) {
+    return (
+      <Drawer onOpenChange={(open) => setOpen(open)} open={open}>
+        <DrawerTrigger asChild>{children}</DrawerTrigger>
+        <DrawerContent className="p-2 gap-3 py-6">
+          <DrawerHeader>
+            <DrawerTitle className="text-2xl">Створити нову картку</DrawerTitle>
+          </DrawerHeader>
+          <p className="text-8xl text-center whitespace-pre-line">
+            {emoVarinat?.emoji}
+          </p>
+          <EmotionsSelect setValue={setEmoVarinat} value={emoVarinat} />
+          <Input
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
+            placeholder="Короткий опис..."
+            className="mb-1"
+          />
 
-        <p className="text-8xl text-center whitespace-pre-line">
-          {emoVarinat?.emoji}
-        </p>
-        <EmotionsSelect setValue={setEmoVarinat} value={emoVarinat} />
-        <Input
-          value={desc}
-          onChange={(e) => setDesc(e.target.value)}
-          placeholder="Короткий опис..."
-          className="mb-1"
-        />
+          <Button
+            size={'lg'}
 
-        <Button
-          type="submit"
-          className="ml-auto"
-          disabled={!desc || !emoVarinat?.name}
-          onClick={handleCreateCard}
-        >
-          Створити
-        </Button>
-      </DialogContent>
-    </Dialog>
-  );
+            type="submit"
+            className="mx-auto text-lg"
+            disabled={!desc || !emoVarinat?.name}
+            onClick={handleCreateCard}
+          >
+            Створити
+          </Button>
+        </DrawerContent>
+      </Drawer>
+    );
+  } else
+    return (
+      <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
+        <DialogTrigger asChild>{children}</DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle className="mb-2">Створити нову картку</DialogTitle>
+
+            <p className="text-8xl text-center whitespace-pre-line">
+              {emoVarinat?.emoji}
+            </p>
+            <EmotionsSelect setValue={setEmoVarinat} value={emoVarinat} />
+            <Input
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
+              placeholder="Короткий опис..."
+              className="mb-1"
+            />
+
+            <Button
+              type="submit"
+              className="ml-auto"
+              disabled={!desc || !emoVarinat?.name}
+              onClick={handleCreateCard}
+            >
+              Створити
+            </Button>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
+    );
 };
