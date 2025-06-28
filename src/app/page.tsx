@@ -1,13 +1,11 @@
-import { AddEmotionDialog } from "@/features/emotions/ui/add-emotion-dialog";
 import { EmotionsGrid } from "@/features/emotions/ui/emotions-grid";
+import { Header } from "@/shared/components/header";
 
 export default function Home() {
   return (
     <main className=" w h-screen">
-      <EmotionsGrid
-      
-      />
-      <AddEmotionDialog />
+      <Header className="mt-3 lg:mt-30"/>
+      <EmotionsGrid />
     </main>
   );
 }

@@ -1,20 +1,20 @@
+"use client";
+
 import { useIsMobile } from "@/shared/hooks/use-is-mobile";
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { DndContext, DndContextProps, DragEndEvent } from "@dnd-kit/core";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { SortableContext } from "@dnd-kit/sortable";
 import React from "react";
 import { EmotionCardDto } from "../types";
 
-interface Props {
-  children: React.ReactNode;
+interface Props extends DndContextProps {
   items: EmotionCardDto[];
-  onDragEnd: (event: DragEndEvent) => void;
 }
 
 export const DraggbleWrapper: React.FC<Props> = ({
   children,
-  onDragEnd,
   items,
+  ...props
 }) => {
   const isMobile = useIsMobile();
 
@@ -22,7 +22,7 @@ export const DraggbleWrapper: React.FC<Props> = ({
     return children;
   }
   return (
-    <DndContext modifiers={[restrictToVerticalAxis]} onDragEnd={onDragEnd}>
+    <DndContext {...props}>
       <SortableContext items={items}>{children}</SortableContext>
     </DndContext>
   );

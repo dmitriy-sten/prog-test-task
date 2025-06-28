@@ -5,23 +5,23 @@ import { Button } from "@/shared/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/shared/components/ui/dialog";
 import { Input } from "@/shared/components/ui/input";
-import { Plus } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { EmotionCardDto } from "../types";
 
 interface Props {
   className?: string;
+  children: React.ReactNode;
 }
 
-export const AddEmotionDialog: React.FC<Props> = ({ className }) => {
+export const AddEmotionDialogTrigger: React.FC<Props> = ({ className, children }) => {
   const [desc, setDesc] = React.useState("");
   const [emoVarinat, setEmoVarinat] = React.useState<EmotionCardDto>();
+  const [open, setOpen] = useState(false);
 
   const { emotionsStore } = useEmotionsStore();
 
@@ -29,33 +29,35 @@ export const AddEmotionDialog: React.FC<Props> = ({ className }) => {
     if (emoVarinat?.name && emoVarinat.emoji) {
       emotionsStore.addNewCard({
         description: desc,
+        color: emoVarinat.color,
         name: emoVarinat.name,
         emoji: emoVarinat.emoji,
       });
     }
 
-    setDesc('')
-    setEmoVarinat(undefined)
-
+    setDesc("");
+    setEmoVarinat(undefined);
+    setOpen(false);
   };
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={(open) => setOpen(open)} open={open}>
       <DialogTrigger asChild>
-        <Button className="flex gap-2 rounded-full">
-          <Plus size={40} />
-        </Button>
+        {children}
+        
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="mb-2">Add new emotion</DialogTitle>
+          <DialogTitle className="mb-2">Створити нову картку</DialogTitle>
 
-          <p className="text-8xl text-center whitespace-pre-line">{emoVarinat?.emoji}</p>
-          <SearchSelect setValue={setEmoVarinat} />
+          <p className="text-8xl text-center whitespace-pre-line">
+            {emoVarinat?.emoji}
+          </p>
+          <SearchSelect setValue={setEmoVarinat} value={emoVarinat} />
           <Input
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
-            placeholder="Enter short description..."
+            placeholder="Короткий опис..."
             className="mb-1"
           />
 
@@ -64,7 +66,7 @@ export const AddEmotionDialog: React.FC<Props> = ({ className }) => {
             disabled={!desc || !emoVarinat?.name}
             onClick={handleCreateCard}
           >
-            Create
+            Створити
           </Button>
         </DialogHeader>
       </DialogContent>

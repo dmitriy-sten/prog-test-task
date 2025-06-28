@@ -5,13 +5,6 @@ export interface EmotionCardDto {
     name: string
     emoji: string
     id: number
+    color:string
 }
 
-
-
-
-export interface EmotionМфкшфте {
-    name: string
-    emoji: string
-    id: number
-}

@@ -10,13 +10,14 @@ export class EmotionsStore {
     makeAutoObservable(this)
   }
 
-  serArray(arr:EmotionCardDto[]){
+  serArray(arr: EmotionCardDto[]) {
     this.emotionCards = arr
   }
 
-  addNewCard(item: EmotionCardDto) {
-    const newId = this.emotionCards.length + 1
-    return this.emotionCards.push({ ...item, id: newId})
+  addNewCard(item: Omit<EmotionCardDto, 'id'>) {
+    const lastElemId = this.emotionCards[this.emotionCards.length - 1]?.id ?? 0
+    const newId = lastElemId + 1
+    return this.emotionCards = [...this.emotionCards, { ...item, id: newId }]
   }
 
   deleteCard(id: number) {
