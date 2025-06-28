@@ -1,8 +1,9 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Tech Stack
+Next.js 15, React 19, Mob-X Tailwind v4, Shadcn, Lucide, DnD-kit, 
 
-## Getting Started
 
-First, run the development server:
+## Start
+
 
 ```bash
 npm run dev
@@ -15,5 +16,3 @@ bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-
