@@ -15,10 +15,7 @@ import { EmotionsSelect } from "./emotions-select";
 import { useIsMobile } from "@/shared/hooks/use-is-mobile";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -46,18 +43,25 @@ export const AddEmotionDialogTrigger: React.FC<Props> = ({
         description: desc,
         ...emoVarinat,
       });
-
       setDesc("");
       setEmoVarinat(undefined);
       setOpen(false);
     }
   };
 
+  const handleClose = (open: boolean) => {
+    setOpen(true);
+    if (open) {
+      setDesc("");
+      setEmoVarinat(undefined);
+    } else setOpen(false);
+  };
+
   if (isMobile) {
     return (
-      <Drawer onOpenChange={(open) => setOpen(open)} open={open}>
+      <Drawer onOpenChange={handleClose} open={open}>
         <DrawerTrigger asChild>{children}</DrawerTrigger>
-        <DrawerContent className="p-2 gap-3 py-6">
+        <DrawerContent className="px-4 gap-3 py-6">
           <DrawerHeader>
             <DrawerTitle className="text-2xl">Створити нову картку</DrawerTitle>
           </DrawerHeader>
@@ -69,12 +73,11 @@ export const AddEmotionDialogTrigger: React.FC<Props> = ({
             value={desc}
             onChange={(e) => setDesc(e.target.value)}
             placeholder="Короткий опис..."
-            className="mb-1"
+            className="mb-4"
           />
 
           <Button
-            size={'lg'}
-
+            size={"lg"}
             type="submit"
             className="mx-auto text-lg"
             disabled={!desc || !emoVarinat?.name}

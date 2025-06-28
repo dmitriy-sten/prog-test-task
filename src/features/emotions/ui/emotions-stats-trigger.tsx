@@ -31,7 +31,11 @@ export const EmotionsStatsTrigger: React.FC<Props> = observer(
 
     return (
       <Popover>
-        <PopoverTrigger className={className} asChild>
+        <PopoverTrigger
+          disabled={emotionCards.length === 0}
+          className={className}
+          asChild
+        >
           {children}
         </PopoverTrigger>
         <PopoverContent>

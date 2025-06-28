@@ -15,8 +15,10 @@ export const Header: React.FC<Props> = ({ className }) => {
   const { emotionsStore } = useEmotionsStore();
   return (
     <header className={cn("p-2 ", className)}>
-      <Card className="justify-end w-full flex-row p-2 ga-2 ">
-        <EmotionsStatsTrigger>
+      <Card className=" w-full items-center flex-row p-2 gap-2 ">
+
+        <h1 className="text-2xl ">Emoji cards</h1>
+        <EmotionsStatsTrigger className="ml-auto">
           <Button>
             <ChartNoAxesColumn />
           </Button>
