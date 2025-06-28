@@ -70,6 +70,7 @@ export function EmotionsSelect({ value, setValue }: Props) {
                       <CommandItem
                         className="flex w-full justify-between"
                         key={item.id}
+                        //@ts-ignore
                         value={value}
                         onSelect={(currentValue) => {
                           setSearch(

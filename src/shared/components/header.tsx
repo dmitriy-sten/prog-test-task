@@ -17,7 +17,7 @@ export const Header: React.FC<Props> = ({ className }) => {
     <header className={cn("p-2 ", className)}>
       <Card className=" w-full items-center flex-row p-2 gap-2 ">
 
-        <h1 className="text-2xl ">Emoji cards</h1>
+        <h1 className="text-xl ">Emoji cards</h1>
         <EmotionsStatsTrigger className="ml-auto">
           <Button>
             <ChartNoAxesColumn />

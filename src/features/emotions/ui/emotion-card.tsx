@@ -30,7 +30,7 @@ export const EmotionCard: React.FC<Props> = observer(({ item }) => {
       {...listeners}
       {...attributes}
       style={{ backgroundColor: `${item.color}53`, ...style }}
-      className="p-2  gap-1 h-full w-full items-center justify-center group relative "
+      className="p-4  gap-0 h-full w-full items-center justify-center group relative "
     >
       <p className="text-5xl select-none ">{item.emoji}</p>
       <h2 className="font-semibold select-none text-2xl">{item.name}</h2>
