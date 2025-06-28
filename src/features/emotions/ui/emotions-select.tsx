@@ -12,21 +12,21 @@ import {
   CommandList,
 } from "@/shared/components/ui/command";
 
-import { Button } from "./ui/button";
+import { Button } from "../../../shared/components/ui/button";
 import { EMOTIONS_VARIANTS } from "@/features/emotions/model/constants";
-import { cn } from "../lib/utils";
+import { cn } from "../../../shared/lib/utils";
 
-import { ScrollArea } from "./ui/scroll-area";
-import { Dialog, DialogTrigger } from "./ui/dialog";
-import { EmotionCardDto } from "@/features/emotions/types";
+import { ScrollArea } from "../../../shared/components/ui/scroll-area";
+import { Dialog, DialogTrigger } from "../../../shared/components/ui/dialog";
+import { EmotionVariant } from "@/features/emotions/types";
 import { AnimatePresence, motion } from "framer-motion";
 
 interface Props {
-  value: EmotionCardDto | undefined;
-  setValue: (value: EmotionCardDto) => void;
+  value: EmotionVariant | undefined;
+  setValue: (value: EmotionVariant) => void;
 }
 
-export function SearchSelect({ value, setValue }: Props) {
+export function EmotionsSelect({ value, setValue }: Props) {
   const [open, setOpen] = React.useState(false);
   const [search, setSearch] = React.useState("");
 

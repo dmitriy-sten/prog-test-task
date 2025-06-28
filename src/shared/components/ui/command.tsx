@@ -140,6 +140,7 @@ function CommandSeparator({
 }
 
 function CommandItem({
+  
   className,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Item>) {

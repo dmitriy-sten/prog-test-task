@@ -3,15 +3,14 @@
 import { useEmotionsStore } from "@/app/providers/store-provider";
 import { cn } from "@/shared/lib/utils";
 import { observer } from "mobx-react-lite";
-import React, { useState } from "react";
+import React from "react";
 import { EmotionCard } from "./emotion-card";
-import { DragEndEvent } from "@dnd-kit/core";
-import { arrayMove } from "@dnd-kit/sortable";
 import { DraggbleWrapper } from "./draggble-wrapper";
 import { Card } from "@/shared/components/ui/card";
 import { Plus } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { AddEmotionDialogTrigger } from "./add-emotion-dialog";
+import { AddEmotionDialogTrigger } from "./add-emotion-dialog-trigger";
+import { useDragEvents } from "../model/use-drag-events";
 
 interface Props {
   className?: string;
@@ -19,30 +18,7 @@ interface Props {
 
 export const EmotionsGrid: React.FC<Props> = observer(({ className }) => {
   const { emotionsStore } = useEmotionsStore();
-
-  const onDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-
-    if (over && active.id !== over.id) {
-      const oldId = emotionsStore.emotionCards.findIndex(
-        (item) => item.id === active.id
-      );
-      const newId = emotionsStore.emotionCards.findIndex(
-        (item) => item.id === over.id
-      );
-      emotionsStore.serArray(
-        arrayMove(emotionsStore.emotionCards, oldId, newId)
-      );
-    }
-  };
-
-  const onDragMove = (event: DragEndEvent) => {
-    const { delta, active } = event;
-
-    if (delta.x < -100) {
-      emotionsStore.deleteCard(active.id as number);
-    }
-  };
+  const { onDragEnd, onDragMove } = useDragEvents();
 
   return (
     <div
@@ -66,7 +42,7 @@ export const EmotionsGrid: React.FC<Props> = observer(({ className }) => {
               transition={{ duration: 0.3 }}
               className="p-2 bg-gray-100 rounded-xl shadow"
             >
-              <EmotionCard item={item}/>
+              <EmotionCard item={item} />
             </motion.div>
           ))}
         </AnimatePresence>

@@ -2,7 +2,6 @@
 
 import { useIsMobile } from "@/shared/hooks/use-is-mobile";
 import { DndContext, DndContextProps, DragEndEvent } from "@dnd-kit/core";
-import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { SortableContext } from "@dnd-kit/sortable";
 import React from "react";
 import { EmotionCardDto } from "../types";

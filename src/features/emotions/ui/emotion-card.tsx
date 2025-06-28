@@ -30,18 +30,17 @@ export const EmotionCard: React.FC<Props> = observer(({ item }) => {
       {...listeners}
       {...attributes}
       style={{ backgroundColor: `${item.color}43`, ...style }}
-      className="p-2  gap-1 h-full w-full items-center group relative "
+      className="p-2  gap-1 h-full w-full items-center justify-center group relative "
     >
       <p className="text-5xl select-none ">{item.emoji}</p>
-      <h2 className="font-semibold select-none">{item.name}</h2>
-      <p className="text-slate-500 select-none text-center whitespace-pre-wrap">
+      <h2 className="font-semibold select-none text-2xl">{item.name}</h2>
+      <p className="text-slate-500 select-none text-center whitespace-pre-wrap break-words max-w-[95%]">
         {item.description}
       </p>
 
       <Button
         className="hidden md:block z-10 bg-red-300 absolute top-1 right-1 opacity-0 group-hover:opacity-100 hover:bg-red-400"
         onClick={() => {
-          console.log("click");
           emotionsStore.deleteCard(item.id);
         }}
       >
